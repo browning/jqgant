@@ -53,7 +53,7 @@
 				d = defaults.tasklist.tasks[t].start_date;
 			}
 		}
-	        d.setDate(d.getDate() - d.getDay())	
+	        d.setDate(d.getDate() - d.getDay() + 1)	
 		return d;
 	}
 
@@ -84,7 +84,8 @@
 				num_days += 2;
 			}
 		}
-		return start_date.addDays(num_days);
+		d = new Date(start_date);
+		return d.addDays(num_days);
 	}
 
 	// this function is called to update the json task object 
@@ -93,7 +94,10 @@
 		defaults.tasklist.tasks[task_id].duration = duration + " days";
 		$('#task' + task_id + "_duration").text(duration + " days"); 
 		defaults.tasklist.tasks[task_id].start_date = start_date;
-		
+	
+		defaults.tasklist.tasks[task_id].start_date = start_date.toString('M/d/yyyy');
+		$('#task' + task_id + "_start_date").text(start_date.toString('M/d/yyyy'));
+
 		end_date = add_workdays_to_date(start_date, duration-1);
 		defaults.tasklist.tasks[task_id].end_date = end_date.toString('M/d/yyyy');
 		$('#task' + task_id + "_end_date").text(end_date.toString('M/d/yyyy'));
@@ -106,7 +110,7 @@
 		// remove weekends from time span // need to fix this // bugs here
 		start_index = diff.getDays() - ( 2 * Math.floor(diff.getDays() / 7 ));
 		diff = new TimeSpan(end - start);
-		length = (diff.getDays()+1) * 21;
+		length = (diff.getDays()+1) * 22;
 
 		$("#cell_" + task_id + "_" + start_index).append("<div id='task" + task_id + "' class='taskbar' style='width: " + length + "px'></div>");
 		$("#task" + task_id).data('task_id', task_id);
@@ -119,6 +123,20 @@
 							new Date($(event.target).data('start_date')),
 						       	Math.floor($(event.target).width() / 22));
 					}});
+		$("#task" + task_id).draggable({containment: [0,
+							     $("#task" + task_id).offset().top,
+							     10000,
+							     $("#task" + task_id).offset().top],
+					stop: function(event, ui) {
+						// snap to borders
+						$(event.target).offset({left: Math.floor($(event.target).offset().left / 22) * 22,
+									top: $(event.target).offset().top});	
+						update_task($(event.target).data('task_id'),
+							add_workdays_to_date(grid_start_date, 
+								Math.floor(($(event.target).offset().left -
+									 $("#cell_0_0").offset().left  )/ 22)),
+							Math.floor($(event.target).width() / 22));	
+							}});
 	}
 
 	var add_cell_headers = function(div, week_labels) {
@@ -160,7 +178,7 @@
 		var task_row = $("<tr />");
 		task_row.append( $("<td />", {"text": defaults.tasklist.tasks[t].name}));
 		task_row.append( $("<td />", {"id": "task" + t + "_duration", "text": defaults.tasklist.tasks[t].duration}));
-		task_row.append( $("<td />", {"text": defaults.tasklist.tasks[t].start_date}));
+		task_row.append( $("<td />", {"id": "task" + t + "_start_date", "text": defaults.tasklist.tasks[t].start_date}));
 		task_row.append( $("<td />", {"id": "task" + t + "_end_date", "text": defaults.tasklist.tasks[t].end_date}));
 		task_table.append(task_row)
 	    }

@@ -67,7 +67,7 @@
 	    }
 	}
 
-	// utility funciton that adds a number of workdays to the date
+	// utility function that adds a number of workdays to the date
 	// takes into account weekends.
 	var add_workdays_to_date = function(start_date, num_workdays) {
 		num_days = num_workdays;

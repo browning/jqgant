@@ -123,10 +123,7 @@
 							new Date($(event.target).data('start_date')),
 						       	Math.floor($(event.target).width() / 22));
 					}});
-		$("#task" + task_id).draggable({containment: [0,
-							     $("#task" + task_id).offset().top,
-							     10000,
-							     $("#task" + task_id).offset().top],
+		$("#task" + task_id).draggable({axis: "x",
 					stop: function(event, ui) {
 						// snap to borders
 						$(event.target).offset({left: Math.floor($(event.target).offset().left / 22) * 22 + 22 - $(".cellcontainer").scrollLeft() %22,

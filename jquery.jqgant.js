@@ -46,11 +46,11 @@
 	//  or a week ago if there are no tasks or tasks are in the future
 	var get_start_date = function() {
 		d = new Date();
-		for ( var t in defaults.tasklist.tasks )
+		for ( var t in plugin.settings.tasklist.tasks )
 		{
-			if ( defaults.tasklist.tasks[t].start_date < d )
+			if ( plugin.settings.tasklist.tasks[t].start_date < d )
 			{
-				d = defaults.tasklist.tasks[t].start_date;
+				d = plugin.settings.tasklist.tasks[t].start_date;
 			}
 		}
 	        d.setDate(d.getDate() - d.getDay() + 1)	
@@ -58,11 +58,11 @@
 	}
 
 	var draw_tasks = function() {
-	    for ( var t in defaults.tasklist.tasks )
+	    for ( var t in plugin.settings.tasklist.tasks )
 	    {
 		    draw_task_bar(t,
-				  defaults.tasklist.tasks[t].start_date,
-				  defaults.tasklist.tasks[t].end_date); 
+				  plugin.settings.tasklist.tasks[t].start_date,
+				  plugin.settings.tasklist.tasks[t].end_date); 
 
 	    }
 	}
@@ -91,15 +91,15 @@
 	// this function is called to update the json task object 
 	// and update the task table
 	var update_task = function(task_id, start_date, duration){
-		defaults.tasklist.tasks[task_id].duration = duration + " days";
+		plugin.settings.tasklist.tasks[task_id].duration = duration + " days";
 		$('#task' + task_id + "_duration").text(duration + " days"); 
-		defaults.tasklist.tasks[task_id].start_date = start_date;
+		plugin.settings.tasklist.tasks[task_id].start_date = start_date;
 	
-		defaults.tasklist.tasks[task_id].start_date = start_date.toString('M/d/yyyy');
+		plugin.settings.tasklist.tasks[task_id].start_date = start_date.toString('M/d/yyyy');
 		$('#task' + task_id + "_start_date").text(start_date.toString('M/d/yyyy'));
 
 		end_date = add_workdays_to_date(start_date, duration-1);
-		defaults.tasklist.tasks[task_id].end_date = end_date.toString('M/d/yyyy');
+		plugin.settings.tasklist.tasks[task_id].end_date = end_date.toString('M/d/yyyy');
 		$('#task' + task_id + "_end_date").text(end_date.toString('M/d/yyyy'));
 	}
 
@@ -170,13 +170,13 @@
         var add_task_list = function(div) {
 	    var task_table = $("<table />", {"id":"jqgant_task_table"});
 	    task_table.append("<tr><th>Task</th><th>Duration</th><th>Start Date</th><th>End Date</th></tr>");
-            for ( var t in defaults.tasklist.tasks )
+            for ( var t in plugin.settings.tasklist.tasks )
 	    {
 		var task_row = $("<tr />");
-		task_row.append( $("<td />", {"text": defaults.tasklist.tasks[t].name}));
-		task_row.append( $("<td />", {"id": "task" + t + "_duration", "text": defaults.tasklist.tasks[t].duration}));
-		task_row.append( $("<td />", {"id": "task" + t + "_start_date", "text": defaults.tasklist.tasks[t].start_date}));
-		task_row.append( $("<td />", {"id": "task" + t + "_end_date", "text": defaults.tasklist.tasks[t].end_date}));
+		task_row.append( $("<td />", {"text": plugin.settings.tasklist.tasks[t].name}));
+		task_row.append( $("<td />", {"id": "task" + t + "_duration", "text": plugin.settings.tasklist.tasks[t].duration}));
+		task_row.append( $("<td />", {"id": "task" + t + "_start_date", "text": plugin.settings.tasklist.tasks[t].start_date}));
+		task_row.append( $("<td />", {"id": "task" + t + "_end_date", "text": plugin.settings.tasklist.tasks[t].end_date}));
 		task_table.append(task_row)
 	    }
 	    div.append(task_table);

@@ -118,14 +118,20 @@
 		$("#task" + task_id).data('task_id', task_id);
 		$("#task" + task_id).data('start_date', start_date);
 		var wndHeight = $(window).height();
-		$("#task" + task_id).resizable({stop: function(event, ui) {
+		$("#task" + task_id).resizable({
+
+			start: function(event, ui) {        
+
+  			  },
+			stop: function(event, ui) {
 					// force resize to end up on a day boundary
 					$(event.target).width( Math.floor($(event.target).width() / 22) * 22 + 22);
 					update_task($(event.target).data('task_id'), 
 							new Date($(event.target).data('start_date')),
 						       	Math.floor($(event.target).width() / 22));
+					$(event.target).attr('position', 'relative');
 					}});
-		$("#task" + task_id).draggable({axis: "x",
+		$("#task" + task_id).draggable({containment: $(".cellcontainer"), axis: "x",
 					stop: function(event, ui) {
 						// snap to borders
 						$(event.target).offset({left: Math.floor($(event.target).offset().left / 22) * 22 + 22 - $(".cellcontainer").scrollLeft() %22,

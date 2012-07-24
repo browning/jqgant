@@ -101,6 +101,8 @@
 		end_date = add_workdays_to_date(start_date, duration-1);
 		plugin.settings.tasklist.tasks[task_id].end_date = end_date.toString('M/d/yyyy');
 		$('#task' + task_id + "_end_date").text(end_date.toString('M/d/yyyy'));
+
+		$("#task" + task_id).data('start_date', start_date);
 	}
 
 	var draw_task_bar = function(task_id, start_date, end_date ) {

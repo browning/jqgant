@@ -99,6 +99,18 @@
 		return d.addDays(num_days);
 	}
 
+	// get # of workdays between 2 dates
+	var diff_workdays = function(start, end ) {
+		duration = new TimeSpan(end - start);
+		num_days = duration.getDays();
+		if ( (num_days % 7) + start.getDay() > 5 )
+		       num_days = num_days - 2;	
+		num_days = num_days - ( 2 * Math.floor(num_days / 7 ));
+		if ( num_days != 0)
+			num_days = num_days + 1;
+		return num_days;
+	}
+
 	// this function is called to update the json task object 
 	// and update the task table
 	var update_task = function(task_id, start_date, duration){
@@ -119,12 +131,10 @@
 	var draw_task_bar = function(task_id, start_date, end_date ) {
 		start = new Date(start_date);
 		end = new Date(end_date);
-		diff = new TimeSpan(start - grid_start_date);
-		// remove weekends from time span // need to fix this // bugs here
-		start_index = diff.getDays() - ( 2 * Math.floor(diff.getDays() / 7 ));
-		diff = new TimeSpan(end - start);
-		var length = (diff.getDays()+1) * CELL_WIDTH;
-
+		
+		start_index = diff_workdays(grid_start_date, start);
+		workdays = diff_workdays(start, end);
+		var length = (workdays ) * CELL_WIDTH;
 		$("#cell_" + task_id + "_" + start_index).append("<div id='task" + task_id + "' class='taskbar' style='width: " + length + "px'></div>");
 		$("#task" + task_id).data('task_id', task_id);
 		$("#task" + task_id).data('start_date', start_date);

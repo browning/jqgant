@@ -31,7 +31,9 @@
 
 	var grid_width = 365;
 	var grid_height = 2;
-	var grid_start_date = new Date(); 
+	var grid_start_date = new Date();
+	var CELL_WIDTH = 22;
+
         plugin.build_chart = function() {
 		var jqgantdiv = $("<div>").attr({"class":"jqgantdiv"});
 		grid_start_date = get_start_date();
@@ -115,7 +117,7 @@
 		// remove weekends from time span // need to fix this // bugs here
 		start_index = diff.getDays() - ( 2 * Math.floor(diff.getDays() / 7 ));
 		diff = new TimeSpan(end - start);
-		var length = (diff.getDays()+1) * 22;
+		var length = (diff.getDays()+1) * CELL_WIDTH;
 
 		$("#cell_" + task_id + "_" + start_index).append("<div id='task" + task_id + "' class='taskbar' style='width: " + length + "px'></div>");
 		$("#task" + task_id).data('task_id', task_id);
@@ -128,22 +130,22 @@
   			  },
 			stop: function(event, ui) {
 					// force resize to end up on a day boundary
-					$(event.target).width( Math.floor($(event.target).width() / 22) * 22 + 22);
+					$(event.target).width( Math.floor($(event.target).width() / CELL_WIDTH) * CELL_WIDTH + CELL_WIDTH);
 					update_task($(event.target).data('task_id'), 
 							new Date($(event.target).data('start_date')),
-						       	Math.floor($(event.target).width() / 22));
+						       	Math.floor($(event.target).width() / CELL_WIDTH));
 					$(event.target).attr('position', 'relative');
 					}});
 		$("#task" + task_id).draggable({containment: $(".cellcontainer"), axis: "x",
 					stop: function(event, ui) {
 						// snap to borders
-						$(event.target).offset({left: Math.floor(($(event.target).offset().left - $("#cell_0_0").offset().left) / 22) * 22 + 22  + $("#cell_0_0").offset().left,
+						$(event.target).offset({left: Math.floor(($(event.target).offset().left - $("#cell_0_0").offset().left) / CELL_WIDTH) * CELL_WIDTH + CELL_WIDTH  + $("#cell_0_0").offset().left,
 									top: $(event.target).offset().top});	
 						update_task($(event.target).data('task_id'),
 							add_workdays_to_date(grid_start_date, 
 								Math.floor(($(event.target).offset().left -
-									$("#cell_0_0").offset().left  )/ 22)),
-							Math.floor($(event.target).width() / 22));	
+									$("#cell_0_0").offset().left  )/ CELL_WIDTH)),
+							Math.floor($(event.target).width() / CELL_WIDTH));	
 							}});
 	}
 

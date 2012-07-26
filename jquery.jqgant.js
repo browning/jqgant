@@ -47,6 +47,12 @@
 		draw_tasks();
         }
 
+	plugin.add_task = function(task) {
+		plugin.settings.tasklist.tasks.push(task);
+		$(".jqgantdiv").empty();
+		plugin.build_chart();
+	}
+
 	// return the First sunday before the earliest task start date
 	//  or a week ago if there are no tasks or tasks are in the future
 	var get_start_date = function() {

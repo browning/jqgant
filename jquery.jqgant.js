@@ -37,7 +37,7 @@
 		grid_start_date = get_start_date();
 		grid_height = plugin.settings.tasklist.tasks.length;
 		add_task_list(jqgantdiv);
-		var cellgrid = $("<div />", {class:"cellcontainer"});
+		var cellgrid = $("<div />", {"class":"cellcontainer"});
 		add_cell_headers(cellgrid);
 		add_cells(cellgrid);
 		jqgantdiv.append(cellgrid);
@@ -115,7 +115,7 @@
 		// remove weekends from time span // need to fix this // bugs here
 		start_index = diff.getDays() - ( 2 * Math.floor(diff.getDays() / 7 ));
 		diff = new TimeSpan(end - start);
-		length = (diff.getDays()+1) * 22;
+		var length = (diff.getDays()+1) * 22;
 
 		$("#cell_" + task_id + "_" + start_index).append("<div id='task" + task_id + "' class='taskbar' style='width: " + length + "px'></div>");
 		$("#task" + task_id).data('task_id', task_id);
@@ -153,7 +153,7 @@
 		{
 			d = new Date();
 			d.setDate( grid_start_date.getDate() + (x*7));
-			div.append( $("<div />", { class:"jqgant_week_label" , text: d.toDateString().substring(4) }));
+			div.append( $("<div />", { "class":"jqgant_week_label" , text: d.toDateString().substring(4) }));
 		}
 		div.append("<br />");
 		for( x=0; x<grid_width/5; x++)
@@ -161,7 +161,7 @@
 			var days_of_week = ["M","T","W","T","F"];
 			for(i in days_of_week)
 			{
-				div.append( $("<div />", { class:"jqgant_cell", text: days_of_week[i]}));
+				div.append( $("<div />", { "class":"jqgant_cell", text: days_of_week[i]}));
 			}
 		}
 		div.append("<br />");
@@ -172,7 +172,7 @@
 		{
 			for ( x=0; x< grid_width; x++)
 			{
-				div.append($("<div />", {id:"cell_" + i + "_" + x, class:"jqgant_cell"}));
+				div.append($("<div />", {id:"cell_" + i + "_" + x, "class":"jqgant_cell"}));
 			}
 			div.append("<br />");
 		}

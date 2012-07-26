@@ -35,8 +35,8 @@ $(document).ready(function() {
 		width: 20px;
 		height: 20px;
 		border-width: 1px;
-		border-style: dotted; 
-		border-color: #999;
+		border-style: solid; 
+		border-color: #ddd;
 		display: inline-block;
 		position: relative;		
 	}
@@ -45,15 +45,29 @@ $(document).ready(function() {
 		height: 20px;
 		width: 108px;
 		border-width: 1px;
-		border-style: dotted;
-		border-color: #999;
+		border-style: solid;
+		border-color: #ddd;
 		display: inline-block;
 	}
 
 	#jqgant_task_table {
 		float: left;
 		margin-top: 20px;
+	
+		border-top: 1px solid #ddd;
+		border-spacing: 0;
+	
 	}
+
+	#jqgant_task_table td,
+        #jqgant_task_table th {
+
+		border: 1px solid #ddd;
+		padding-left: 2px;
+		padding-right: 5px;
+
+	}
+
 
 	.taskbar {
 		background-color: #900;
@@ -62,6 +76,13 @@ $(document).ready(function() {
 		max-height: 18px;
 		position: relative;
 		z-index: 5;
+	}
+
+	.jqgantdiv {
+	
+		Font-family: Calibri, sans-serif;
+		font-size: normal;
+	
 	}
 
 

@@ -9,8 +9,11 @@
 
         var defaults = {
             foo: 'bar',
-	    tasklist: {tasks:[{"name":"task1", "duration":"5 days", "start_date":"07/23/2012", "end_date":"07/26/2012"},
-	    {"name":"task2", "duration":"3 days", "start_date":"08/01/2012", "end_date":"08/03/2012"}]},
+	    tasklist: {tasks:[{"name":" long task1", "duration":"5 days", "start_date":"07/23/2012", "end_date":"07/26/2012"},
+	    {"name":"task2", "duration":"3 days", "start_date":"08/01/2012", "end_date":"08/03/2012"},
+	    {"name":"do stuff", "duration": "4 days", "start_date":"8/5/2012", "end_date":"8/9/2012"},
+	    {"name":"This is the default task list", "duration": "5 days", "start_date":"8/7/2012", "end_date":"8/9/2012"} 
+	    ]},
             onFoo: function() {}
         }
 
@@ -32,10 +35,10 @@
         plugin.build_chart = function() {
 		var jqgantdiv = $("<div>").attr({"class":"jqgantdiv"});
 		grid_start_date = get_start_date();
+		grid_height = plugin.settings.tasklist.tasks.length;
 		add_task_list(jqgantdiv);
-		var weeklabels = ["Jun 15, '12", "Jun 22, '12", "Jun 29, '12"];
 		var cellgrid = $("<div />", {class:"cellcontainer"});
-		add_cell_headers(cellgrid, weeklabels);
+		add_cell_headers(cellgrid);
 		add_cells(cellgrid);
 		jqgantdiv.append(cellgrid);
 		$element.append(jqgantdiv);
@@ -134,7 +137,7 @@
 		$("#task" + task_id).draggable({containment: $(".cellcontainer"), axis: "x",
 					stop: function(event, ui) {
 						// snap to borders
-						$(event.target).offset({left: Math.floor($(event.target).offset().left / 22) * 22 + 22 - $(".cellcontainer").scrollLeft() %22,
+						$(event.target).offset({left: Math.floor(($(event.target).offset().left - $("#cell_0_0").offset().left) / 22) * 22 + 22  + $("#cell_0_0").offset().left,
 									top: $(event.target).offset().top});	
 						update_task($(event.target).data('task_id'),
 							add_workdays_to_date(grid_start_date, 
@@ -144,13 +147,13 @@
 							}});
 	}
 
-	var add_cell_headers = function(div, week_labels) {
+	var add_cell_headers = function(div) {
 		// draw a label for each week
 		for ( x = 0; x<grid_width / 5; x++)
 		{
 			d = new Date();
 			d.setDate( grid_start_date.getDate() + (x*7));
-			div.append( $("<div />", { class:"jqgant_week_label" , text: d.toDateString() }));
+			div.append( $("<div />", { class:"jqgant_week_label" , text: d.toDateString().substring(4) }));
 		}
 		div.append("<br />");
 		for( x=0; x<grid_width/5; x++)

@@ -21,7 +21,12 @@ $(document).ready(function() {
     $("#addtask").click( function() {
 	$("#chartdiv").data('jqgant').add_task( { "name":"new task", "duration":"2 days", "start_date":"7/27/12", "end_date":"8/2/12"});
 	return false;
-    });
+});
+
+	$("#removetask").click( function () {
+	 $("#chartdiv").data('jqgant').remove_task(1);
+ 	return false;
+ });
 });
 </script>
 <style>
@@ -100,6 +105,7 @@ $(document).ready(function() {
 		</div>
 		<br /><br />
 		<a href="#" id="addtask">add task</a>
+	<br /><a href="#" id="removetask">remove task</a>
 	</body>
 
 </html>

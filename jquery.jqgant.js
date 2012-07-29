@@ -9,10 +9,10 @@
 
         var defaults = {
             foo: 'bar',
-	    tasklist: {tasks:[{"name":" long task1", "duration":"5 days", "start_date":"07/23/2012", "end_date":"07/26/2012"},
-	    {"name":"task2", "duration":"3 days", "start_date":"08/01/2012", "end_date":"08/03/2012"},
-	    {"name":"do stuff", "duration": "4 days", "start_date":"8/5/2012", "end_date":"8/9/2012"},
-	    {"name":"This is the default task list", "duration": "5 days", "start_date":"8/7/2012", "end_date":"8/9/2012"} 
+	    tasklist: {tasks:[{"name":" long task1", "duration":"5 days", "start_date":"07/23/2012", "end_date":"07/26/2012", "pct_completion": 0},
+	    {"name":"task2", "duration":"3 days", "start_date":"08/01/2012", "end_date":"08/03/2012", "pct_completion":0},
+	    {"name":"do stuff", "duration": "4 days", "start_date":"8/5/2012", "end_date":"8/9/2012", "pct_completion":50},
+	    {"name":"This is the default task list", "duration": "5 days", "start_date":"8/7/2012", "end_date":"8/9/2012", "pct_completion":10} 
 	    ]},
             onFoo: function() {}
         }
@@ -79,7 +79,8 @@
 	    {
 		    draw_task_bar(t,
 				  plugin.settings.tasklist.tasks[t].start_date,
-				  plugin.settings.tasklist.tasks[t].end_date); 
+				  plugin.settings.tasklist.tasks[t].end_date,
+				  plugin.settings.tasklist.tasks[t].pct_completion); 
 
 	    }
 	}
@@ -134,7 +135,7 @@
 		$("#task" + task_id).data('start_date', start_date);
 	}
 
-	var draw_task_bar = function(task_id, start_date, end_date ) {
+	var draw_task_bar = function(task_id, start_date, end_date, pct_completion ) {
 		start = new Date(start_date);
 		end = new Date(end_date);
 		
@@ -145,6 +146,11 @@
 		$("#task" + task_id).data('task_id', task_id);
 		$("#task" + task_id).data('start_date', start_date);
 		var wndHeight = $(window).height();
+
+		// set percent completion gradient
+		
+		$("#task" + task_id).css('background-image', '-webkit-linear-gradient(left, red ' + String(pct_completion - 10) + '%, blue ' + pct_completion + '%)');
+
 		$("#task" + task_id).resizable({
 
 			start: function(event, ui) {        
@@ -204,7 +210,7 @@
 
         var add_task_list = function(div) {
 	    var task_table = $("<table />", {"id":"jqgant_task_table"});
-	    task_table.append("<tr><th>Task</th><th>Duration</th><th>Start Date</th><th>End Date</th></tr>");
+	    task_table.append("<tr><th>Task</th><th>Duration</th><th>Start Date</th><th>End Date</th><th>% Complete</th></tr>");
             for ( var t in plugin.settings.tasklist.tasks )
 	    {
 		var task_row = $("<tr />");
@@ -212,6 +218,7 @@
 		task_row.append( $("<td />", {"id": "task" + t + "_duration", "text": plugin.settings.tasklist.tasks[t].duration}));
 		task_row.append( $("<td />", {"id": "task" + t + "_start_date", "text": plugin.settings.tasklist.tasks[t].start_date}));
 		task_row.append( $("<td />", {"id": "task" + t + "_end_date", "text": plugin.settings.tasklist.tasks[t].end_date}));
+		task_row.append( $("<td />", {"text":"0"}) );
 		task_table.append(task_row)
 	    }
 	    div.append(task_table);

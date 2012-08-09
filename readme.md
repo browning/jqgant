@@ -3,7 +3,7 @@ JQGant v0.05a
 
 ### A jquery gantt plugin
 
-[![jqgant screenshot](screenshot.png)
+[![jqgant screenshot](/screenshot.png)
 
 ### Status
 

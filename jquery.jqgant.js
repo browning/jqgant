@@ -65,9 +65,9 @@
 		d = new Date();
 		for ( var t in plugin.settings.tasklist.tasks )
 		{
-			if ( plugin.settings.tasklist.tasks[t].start_date < d )
+			if ( Date.parse(plugin.settings.tasklist.tasks[t].start_date) < d )
 			{
-				d = plugin.settings.tasklist.tasks[t].start_date;
+				d = Date.parse(plugin.settings.tasklist.tasks[t].start_date);
 			}
 		}
 	        d.setDate(d.getDate() - d.getDay() + 1)	
@@ -140,6 +140,8 @@
 		end = new Date(end_date);
 		
 		start_index = diff_workdays(grid_start_date, start);
+		if (start_index > 0)
+			start_index = start_index - 1;
 		workdays = diff_workdays(start, end);
 		var length = (workdays ) * CELL_WIDTH;
 		$("#cell_" + task_id + "_" + start_index).append("<div id='task" + task_id + "' class='taskbar' style='width: " + length + "px'></div>");
@@ -181,8 +183,8 @@
 		// draw a label for each week
 		for ( x = 0; x<grid_width / 5; x++)
 		{
-			d = new Date();
-			d.setDate( grid_start_date.getDate() + (x*7));
+			d = new Date(grid_start_date);
+			d.setDate( d.getDate() + (x*7));
 			div.append( $("<div />", { "class":"jqgant_week_label" , text: d.toDateString().substring(4) }));
 		}
 		div.append("<br />");

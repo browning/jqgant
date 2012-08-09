@@ -150,7 +150,7 @@
 		// set percent completion gradient
 		
 		$("#task" + task_id).css('background-image', '-webkit-linear-gradient(left, red ' + String(pct_completion ) + '%, blue ' + pct_completion + '%)');
-
+		$("#task" + task_id).css('background-image', '-moz-linear-gradient(left, red ' + String(pct_completion) + '%, blue ' + pct_completion + '%)');
 		$("#task" + task_id).resizable({
 
 			start: function(event, ui) {        

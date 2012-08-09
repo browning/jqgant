@@ -218,7 +218,7 @@
 		task_row.append( $("<td />", {"id": "task" + t + "_duration", "text": plugin.settings.tasklist.tasks[t].duration}));
 		task_row.append( $("<td />", {"id": "task" + t + "_start_date", "text": plugin.settings.tasklist.tasks[t].start_date}));
 		task_row.append( $("<td />", {"id": "task" + t + "_end_date", "text": plugin.settings.tasklist.tasks[t].end_date}));
-		task_row.append( $("<td />", {"text":"0"}) );
+		task_row.append( $("<td />", {"id": "task" + t + "_completion_pct", "text": plugin.settings.tasklist.tasks[t].pct_completion}) );
 		task_table.append(task_row)
 	    }
 	    div.append(task_table);

@@ -22,6 +22,13 @@ This is an early version of my jquery gantt plugin. It is not ready for primetim
 *   Chaining tasks
 *   IE support
 
+
+### Dependencies
+
+* jquery 1.5.2+ ( untested on lower )
+* jquery-ui 1.8.2+
+* date.js and time.js
+
 ### Credits
 
 Stefan Gabos jquery plugin boilerplate, jquery.ganttView for some inspiration & ideas

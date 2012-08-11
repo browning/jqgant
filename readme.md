@@ -14,6 +14,7 @@ This is an early version of my jquery gantt plugin. It is not ready for primetim
 *   Add and remove tasks
 *   Resize and drag tasks
 *   Completion percentages show up on tasks
+*   Change completion percentages on the fly
 
 ### Todos
 

@@ -7,6 +7,13 @@
 	position: relative;
 }
 
+#chartdiv {
+	min-width:3000px; 
+	width: auto !important;
+       	width: 3000px;
+	overflow: hidden;
+}
+
 .jqgant_cell {
 	width: 20px;
 	height: 20px;

@@ -6,12 +6,16 @@
 		<script src="time.js"></script>
 		<script src="jquery.jqgant.js"></script>
 		
+		
 		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/flick/jquery-ui.css" type="text/css">
 		<link rel="stylesheet" href="jqgant.css" type="text/css">
 		
 	
 		<script>
+
+
 $(document).ready(function() {
+
 
     // attach the plugin to an element
     $('#chartdiv').jqgant({'foo': 'bar'});
@@ -29,8 +33,10 @@ $(document).ready(function() {
 	$("#removetask").click( function () {
 	 $("#chartdiv").data('jqgant').remove_task(1);
  	return false;
- });
 });
+
+});
+
 </script>
 		
 	</head>

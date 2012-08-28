@@ -1,7 +1,5 @@
-// jQuery Plugin Boilerplate
-// A boilerplate for jumpstarting jQuery plugins development
-// version 1.1, May 14th, 2011
-// by Stefan Gabos
+// jquery.jqgant.js
+// a jQuery Gantt chart plugin
 
 (function($) {
 

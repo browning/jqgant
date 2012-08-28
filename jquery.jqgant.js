@@ -14,7 +14,9 @@
 	    {"name":"do stuff", "duration": "4 days", "start_date":"8/5/2012", "end_date":"8/9/2012", "pct_completion":50},
 	    {"name":"This is the default task list", "duration": "5 days", "start_date":"8/7/2012", "end_date":"8/9/2012", "pct_completion":10} 
 	    ]},
-            editable: true
+            editable: true,
+	    progress_color: "#cc0000",
+	    task_color: "#0000cc"
 	}
 
         var plugin = this;
@@ -151,8 +153,8 @@
 
 		// set percent completion gradient
 		
-		$("#task" + task_id).css('background-image', '-webkit-linear-gradient(left, red ' + String(pct_completion ) + '%, blue ' + pct_completion + '%)');
-		$("#task" + task_id).css('background-image', '-moz-linear-gradient(left, red ' + String(pct_completion) + '%, blue ' + pct_completion + '%)');
+		$("#task" + task_id).css('background-image', '-webkit-linear-gradient(left, ' + plugin.settings.progress_color + ' ' + String(pct_completion ) + '%,  ' + plugin.settings.task_color + ' ' + pct_completion + '%)');
+		$("#task" + task_id).css('background-image', '-moz-linear-gradient(left, ' +  plugin.settings.progress_color + ' ' + String(pct_completion) + '%, ' + plugin.settings.task_color + ' '  + pct_completion + '%)');
 		
 		if ( plugin.settings.editable ) {
 			$("#task" + task_id).resizable({

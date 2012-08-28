@@ -14,8 +14,8 @@
 	    {"name":"do stuff", "duration": "4 days", "start_date":"8/5/2012", "end_date":"8/9/2012", "pct_completion":50},
 	    {"name":"This is the default task list", "duration": "5 days", "start_date":"8/7/2012", "end_date":"8/9/2012", "pct_completion":10} 
 	    ]},
-            onFoo: function() {}
-        }
+            editable: true
+	}
 
         var plugin = this;
 
@@ -153,30 +153,33 @@
 		
 		$("#task" + task_id).css('background-image', '-webkit-linear-gradient(left, red ' + String(pct_completion ) + '%, blue ' + pct_completion + '%)');
 		$("#task" + task_id).css('background-image', '-moz-linear-gradient(left, red ' + String(pct_completion) + '%, blue ' + pct_completion + '%)');
-		$("#task" + task_id).resizable({
+		
+		if ( plugin.settings.editable ) {
+			$("#task" + task_id).resizable({
 
-			start: function(event, ui) {        
+				start: function(event, ui) {        
 
-  			  },
-			stop: function(event, ui) {
-					// force resize to end up on a day boundary
-					$(event.target).width( Math.floor($(event.target).width() / CELL_WIDTH) * CELL_WIDTH + CELL_WIDTH);
-					update_task($(event.target).data('task_id'), 
-							new Date($(event.target).data('start_date')),
-						       	Math.floor($(event.target).width() / CELL_WIDTH));
-					$(event.target).attr('position', 'relative');
-					}});
-		$("#task" + task_id).draggable({containment: $(".cellcontainer"), axis: "x",
-					stop: function(event, ui) {
-						// snap to borders
-						$(event.target).offset({left: Math.floor(($(event.target).offset().left - $("#cell_0_0").offset().left) / CELL_WIDTH) * CELL_WIDTH + CELL_WIDTH  + $("#cell_0_0").offset().left,
-									top: $(event.target).offset().top});	
-						update_task($(event.target).data('task_id'),
-							add_workdays_to_date(grid_start_date, 
-								Math.floor(($(event.target).offset().left -
-									$("#cell_0_0").offset().left  )/ CELL_WIDTH)),
-							Math.floor($(event.target).width() / CELL_WIDTH));	
-							}});
+				  },
+				stop: function(event, ui) {
+						// force resize to end up on a day boundary
+						$(event.target).width( Math.floor($(event.target).width() / CELL_WIDTH) * CELL_WIDTH + CELL_WIDTH);
+						update_task($(event.target).data('task_id'), 
+								new Date($(event.target).data('start_date')),
+								Math.floor($(event.target).width() / CELL_WIDTH));
+						$(event.target).attr('position', 'relative');
+						}});
+			$("#task" + task_id).draggable({containment: $(".cellcontainer"), axis: "x",
+						stop: function(event, ui) {
+							// snap to borders
+							$(event.target).offset({left: Math.floor(($(event.target).offset().left - $("#cell_0_0").offset().left) / CELL_WIDTH) * CELL_WIDTH + CELL_WIDTH  + $("#cell_0_0").offset().left,
+										top: $(event.target).offset().top});	
+							update_task($(event.target).data('task_id'),
+								add_workdays_to_date(grid_start_date, 
+									Math.floor(($(event.target).offset().left -
+										$("#cell_0_0").offset().left  )/ CELL_WIDTH)),
+								Math.floor($(event.target).width() / CELL_WIDTH));	
+								}});
+		}
 	}
 
 	var add_cell_headers = function(div) {
@@ -237,15 +240,17 @@
          		.text(value)); 
 		});
 		completion_select.val(plugin.settings.tasklist.tasks[t].pct_completion);
-		completion_select.change(function(t) { return function() {
-			plugin.settings.tasklist.tasks[t].pct_completion = $(this).val();
-			$("#task" + t).remove();
-			draw_task_bar(t, 
-				plugin.settings.tasklist.tasks[t].start_date,
-				plugin.settings.tasklist.tasks[t].end_date,
-				$(this).val());
-		};
-		}(t));
+		if ( plugin.settings.editable ) {
+			completion_select.change(function(t) { return function() {
+				plugin.settings.tasklist.tasks[t].pct_completion = $(this).val();
+				$("#task" + t).remove();
+				draw_task_bar(t, 
+					plugin.settings.tasklist.tasks[t].start_date,
+					plugin.settings.tasklist.tasks[t].end_date,
+					$(this).val());
+			};
+			}(t));
+		}
 		completion_td.append(completion_select);
 		task_row.append(completion_td);
 		task_table.append(task_row)

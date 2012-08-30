@@ -219,13 +219,22 @@
             for ( var t in plugin.settings.tasklist.tasks )
 	    {
 		var task_row = $("<tr />");
-		task_row.append( $("<td />", {"text": plugin.settings.tasklist.tasks[t].name}));
-		task_row.append( $("<td />", {"id": "task" + t + "_duration", "text": plugin.settings.tasklist.tasks[t].duration}));
-		task_row.append( $("<td />", {"id": "task" + t + "_start_date", "text": plugin.settings.tasklist.tasks[t].start_date}));
-		task_row.append( $("<td />", {"id": "task" + t + "_end_date", "text": plugin.settings.tasklist.tasks[t].end_date}));
-		
+		var cell = $("<td />");
+		cell.append( $("<div />", {"text": plugin.settings.tasklist.tasks[t].name}));
+		task_row.append(cell);
+		cell = $("<td />");
+		cell.append( $("<div />", {"id": "task" + t + "_duration", "text": plugin.settings.tasklist.tasks[t].duration}));
+		task_row.append(cell);
+		cell = $("<td />");
+		cell.append( $("<div />", {"id": "task" + t + "_start_date", "text": plugin.settings.tasklist.tasks[t].start_date}));
+		task_row.append(cell);
+		cell = $("<td />");
+		cell.append( $("<div />", {"id": "task" + t + "_end_date", "text": plugin.settings.tasklist.tasks[t].end_date}));
+		task_row.append(cell);
+
 		// display select box for the completion percentage
-		var completion_td =  $("<td />", {"id": "task" + t + "_completion_pct"});
+		cell = $("<td />");
+		var completion_cell =  $("<div />", {"id": "task" + t + "_completion_pct"});
 		var completion_select = $("<select />");
 		selectValues = {}
 		for ( i=0; i<=100; i++)
@@ -251,8 +260,9 @@
 			};
 			}(t));
 		}
-		completion_td.append(completion_select);
-		task_row.append(completion_td);
+		completion_cell.append(completion_select);
+		cell.append(completion_cell);
+		task_row.append(cell);
 		task_table.append(task_row)
 	    }
 	    div.append(task_table);

@@ -52,6 +52,12 @@
 	padding-bottom:0px;
 	height: 22px;
 	overflow:hidden;
+	white-space: nowrap;
+}
+
+#jqgant_task_table div {
+	height: 21px;
+	overflow: auto;
 }
 
 #jqgant_task_table select {

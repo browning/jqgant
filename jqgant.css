@@ -62,6 +62,7 @@
 
 #jqgant_task_table select {
 	height: 18px;
+	padding: 0 0;
 }
 
 
@@ -75,7 +76,5 @@
 
 .jqgantdiv {
 
-	Font-family: Calibri, sans-serif;
-	font-size: normal;
 
 }

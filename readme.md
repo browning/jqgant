@@ -7,7 +7,7 @@ JQGant v0.05a
 
 ### Status
 
-This is an early version of my jquery gantt plugin. It is not ready for primetime yet, but it is getting close to a usable feature set.
+An early version of my jquery gantt plugin. I am working on a gantt chart sharing site so this will improve as that progresses.
 
 ### Features
 
@@ -18,11 +18,13 @@ This is an early version of my jquery gantt plugin. It is not ready for primetim
 
 ### Todos
 
-*   Customization 
-*   Documentation
+*   Better Documentation
 *   Chaining tasks
 *   IE support
 
+### Example
+
+*   See example.html file
 
 ### Dependencies
 
